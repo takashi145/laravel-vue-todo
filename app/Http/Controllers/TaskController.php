@@ -16,7 +16,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return TaskResource::collection(Task::orderBy('updated_at', 'desc')->get());
+        return TaskResource::collection(Task::orderBy('id', 'desc')->get());
     }
 
     /**
@@ -40,6 +40,21 @@ class TaskController extends Controller
     public function show($id)
     {
         return new TaskResource(Task::findOrFail($id));
+    }
+
+    /**
+     * Update Task Status
+     * 
+     * @param int id
+     * @return \Illuminate\Http\Response
+     */
+    public function update($id)
+    {
+        $task = Task::findOrFail($id);
+        $task->completed = !$task->completed;
+        $task->save();
+
+        return response()->json(['message' => 'success'], Response::HTTP_OK);
     }
 
     /**
