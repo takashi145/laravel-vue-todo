@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router"
 import Home from '@/Pages/Home.vue'
-import TaskList from '@/Pages/task/Index.vue'
+import TaskList from '@/Pages/task/TaskList.vue'
 
 const routes = [
   {
