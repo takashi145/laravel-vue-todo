@@ -22,7 +22,9 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-
+        $this->call([
+            UserSeeder::class
+        ]);
         Task::factory(30)->create();
     }
 }

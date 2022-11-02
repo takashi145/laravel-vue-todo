@@ -15,6 +15,7 @@ const searchForm = reactive({
   deadline_start: null,
   deadline_end: null,
 });
+
 const form = reactive({
   title: '',
   description: '',
@@ -27,6 +28,7 @@ onMounted(() => {
 
 const getTaskList = async () => {
   try {
+    isLoading.value = false
     await axios.get('/api/task', { params: searchForm })
       .then(res => {
         console.log(res.data)
