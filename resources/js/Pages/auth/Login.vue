@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { reactive } from "@vue/reactivity";
 import axios from 'axios';
 import { useRouter } from 'vue-router'
+import { store } from '../../store';
 
 const router = useRouter();
 
@@ -17,9 +18,8 @@ const login = async() => {
   try {
     await axios.get('/sanctum/csrf-cookie');
     await axios.post('/api/login', form)
-      .then((res) => {
-        router.push('/')
-      });
+    store.commit('setLoginState', true)
+    router.push('/')
   }catch(e) {
     console.log(e);
     error.value = 'ログインに失敗しました。メールアドレスまたはパスワードが違います。'

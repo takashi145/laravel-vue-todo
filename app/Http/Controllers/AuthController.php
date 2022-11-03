@@ -44,7 +44,13 @@ class AuthController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
-        
+
         return response()->json($user, Response::HTTP_CREATED);
+    }
+
+    public function logout()
+    {
+        Auth::guard('web')->logout();
+        return response()->noContent();
     }
 }

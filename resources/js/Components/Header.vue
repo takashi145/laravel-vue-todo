@@ -1,6 +1,11 @@
 <script setup>
+import axios from 'axios';
 import { ref } from 'vue';
 import Logo from './Logo.vue';
+import { useRouter } from 'vue-router'
+import { store } from '../store';
+
+const router = useRouter();
 
 const links = ref([
   {
@@ -13,8 +18,14 @@ const links = ref([
   },
 ])
 
-const logout = () => {
-  alert("logout")
+const logout = async() => {
+  try {
+    await axios.post('/api/logout')
+    store.commit('setLoginState', false)
+    router.push('/login')
+  }catch(e) {
+    console.log(e)
+  }
 }
 </script>
 
