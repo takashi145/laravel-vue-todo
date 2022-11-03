@@ -39,19 +39,21 @@ const router = createRouter({
 
 router.beforeEach((to, from , next) => {
   if(to.matched.some(record => record.meta.requiresAuth)){
-    if(!store.getters.user) {
+    if(!store.getters.login) {
       next({ path: '/login', query: { redirect: to.fullPath }})
     }else {
       next();
     }
-  }else if(to.matched.some(record => record.meta.guest)){
-    if(!store.getters.login) {
-      next();
+  }else{ 
+    if(to.matched.some(record => record.meta.guest)){
+      if(!store.getters.login) {
+        next();
+      }else {
+        next('/')
+      }
     }else {
-      next({path: '/'})
+      next();
     }
-  }else {
-    next();
   }
 })
 

@@ -1,9 +1,9 @@
 <script setup>
-import AuthLayout from '../Layouts/AuthLayout.vue';
 </script>
 
 <template>
-  <auth-layout>
+  <div>
     <h1 class="text-red-300">Home</h1>
-  </auth-layout>
+    <router-link to="/task">タスク一覧</router-link>
+  </div>
 </template>

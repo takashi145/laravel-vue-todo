@@ -32,7 +32,6 @@ const getTaskList = async () => {
     isLoading.value = false
     await axios.get('/api/task', { params: searchForm })
       .then(res => {
-        console.log(res.data)
         setTimeout(() => {
           isLoading.value = true
           tasks.value = res.data
