@@ -18,15 +18,11 @@ class CategorySeeder extends Seeder
         DB::table('categories')->insert([
             [
                 'user_id' => 1,
-                'name' => 'test1',
+                'name' => 'プライベート',
             ],
             [
                 'user_id' => 1,
-                'name' => 'test2',
-            ],
-            [
-                'user_id' => 1,
-                'name' => 'test3',
+                'name' => '仕事',
             ],
         ]);
     }
