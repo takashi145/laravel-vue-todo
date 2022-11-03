@@ -62,7 +62,7 @@ const createCategory = async() => {
           </form>
 
           <ul class="mx-3">
-            <li v-for="category in categories" :key="category.id" class="text-lg m-3 p-1 hover:border-b-2 border-indigo-400 cursor-pointer">
+            <li v-for="category in categories" :key="category.id" class="border-b-2 border-gray-300 text-lg m-3 p-1 hover:border-b-2 hover:border-indigo-300 cursor-pointer">
               {{ category.name }}
             </li>
           </ul>

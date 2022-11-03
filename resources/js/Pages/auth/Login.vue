@@ -20,7 +20,7 @@ const login = async() => {
     await axios.get('/sanctum/csrf-cookie');
     await axios.post('/api/login', form)
     store.commit('setLoginState', true)
-    router.push('/')
+    router.push('/task')
   }catch(e) {
     console.log(e);
     error.value = 'ログインに失敗しました。メールアドレスまたはパスワードが違います。'

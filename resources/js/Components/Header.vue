@@ -9,12 +9,12 @@ const router = useRouter();
 
 const links = ref([
   {
-    name: 'Home',
-    url: '/'
+    name: 'Todoリスト',
+    url: '/task'
   },
   {
-    name: 'TaskList',
-    url: '/task'
+    name: 'カテゴリー管理',
+    url: '/category'
   },
 ])
 
@@ -43,7 +43,7 @@ const logout = async() => {
     </div>
     
     <div>
-      <button @click="logout" class="bg-gray-400 hover:bg-gray-500 text-white mt-3 p-2 rounded mb-2">Logout</button>
+      <button @click="logout" class="bg-gray-400 hover:bg-gray-500 text-white mt-3 p-2 rounded mb-2">ログアウト</button>
     </div>
   </header>
 </template>
