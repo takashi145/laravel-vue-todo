@@ -33,7 +33,7 @@ const submit = () => {
                       <div>
                           <label for="title" class="block mb-2 text-lg font-medium text-gray-900">Title <span class="text-red-500">*</span></label>
                           <input type="text" v-model="form.title" name="title" id="title" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3" placeholder="タイトルを入力してください" required>
-                          <div v-if="errors.name" class="text-red-400 ml-3">{{ errors.name[0] }}</div>
+                          <div v-if="errors.title" class="text-red-400 ml-3">{{ errors.title[0] }}</div>
                       </div>
                       <div>
                           <label for="description" class="block mb-2 text-lg font-medium text-gray-900">Description</label>
