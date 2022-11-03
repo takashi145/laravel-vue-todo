@@ -1,8 +1,9 @@
 <script setup>
+import AuthLayout from '../Layouts/AuthLayout.vue';
 </script>
 
 <template>
-  <div>
+  <auth-layout>
     <h1 class="text-red-300">Home</h1>
-  </div>
+  </auth-layout>
 </template>
