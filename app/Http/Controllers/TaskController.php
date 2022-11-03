@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class TaskController extends Controller
         ->searchStatus($request->completed)
         ->searchKeyword($request->keyword)
         ->betweenDeadline($request->deadline_start, $request->deadline_end)
-        ->orderBy('id', 'desc')
+        ->orderBy('deadline', 'asc')
         ->get();
 
         return TaskResource::collection($tasks);
@@ -33,7 +34,7 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \App\Http\Resources\TaskResource
      */
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
         $task = Task::create($request->only(['title', 'description', 'deadline']));
         return new TaskResource($task);
