@@ -18,7 +18,6 @@ const login = async() => {
     await axios.get('/sanctum/csrf-cookie');
     await axios.post('/api/login', form)
       .then((res) => {
-        console.log(res)
         router.push('/')
       });
   }catch(e) {
@@ -49,10 +48,9 @@ const login = async() => {
             <button type="submit" class="w-1/2 mx-3 text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3">Login</button>
           </div>
           <div>
-            <router-link to="/" class="text-blue-400 hover:text-blue-500">アカウントをお持ちではありませんか?新規登録</router-link>
+            <router-link to="/register" class="text-blue-400 hover:text-blue-500">アカウントをお持ちではありませんか?新規登録</router-link>
           </div>
       </form>
     </div>  
   </div>
-  
 </template>
