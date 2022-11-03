@@ -3,6 +3,7 @@ import { onMounted } from '@vue/runtime-core';
 import { ref, reactive } from 'vue';
 import axios from 'axios';
 import AuthLayout from '../../Layouts/AuthLayout.vue';
+import CategoryList from '../../Components/CategoryList.vue';
 
 const tasks = ref([]);
 const taskDetail = ref({});
@@ -171,6 +172,8 @@ const deleteTask = async (id) => {
           <div class="fixed top-80 animate-spin h-16 w-16 border-8 border-t-transparent border-white rounded-full"></div>
         </div>
       </div>
+
+      <CategoryList />
 
       <section class="text-gray-600 body-font">
         <div class="container px-5 py-12 mx-auto">
