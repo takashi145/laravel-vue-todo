@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -15,16 +16,8 @@ class CategoryController extends Controller
         return CategoryResource::collection(Category::with('tasks')->orderBy('name', 'asc')->get());
     }
 
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        $name = $request->name;
-        $category_exists = Category::where('name', $request->input('name'))->exists();
-        if($category_exists) {
-            return response()->json([
-                'message' => `${name} already exist`
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-        
         $category = Category::create([
             'user_id' => Auth::id(),
             'name' => $request->input('name'),

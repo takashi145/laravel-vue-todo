@@ -21,10 +21,18 @@ const form = reactive
 });
 
 const search = async () => {
-  await router.push({
-    path: `/category/${route.params.id}`,
-    query: form
-  });
+  if(route.params.id) {
+    await router.push({
+      path: `/category/${route.params.id}`,
+      query: form
+    });
+  }else {
+    await router.push({
+      path: '/task',
+      query: form
+    });
+  }
+  
   emit('search')
 }
 
