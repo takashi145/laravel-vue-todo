@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\TaskResource;
 use App\Models\Category;
 use App\Models\Task;
@@ -12,7 +13,7 @@ use Illuminate\Http\Response;
 class TaskController extends Controller
 {
 
-    public function task_list(Request $request, Category $category)
+    public function get_task_list(Request $request, Category $category)
     {
         $tasks = $category->tasks()
             ->searchDeadline($request->deadline)
@@ -22,7 +23,10 @@ class TaskController extends Controller
             ->orderBy('deadline', 'asc')
             ->get();
 
-        return TaskResource::collection($tasks);
+        return response()->json([
+            'tasks' => TaskResource::collection($tasks),
+            'category' => new CategoryResource($category),
+        ]);
     }
     
     /**
@@ -40,7 +44,10 @@ class TaskController extends Controller
         ->orderBy('deadline', 'asc')
         ->get();
 
-        return TaskResource::collection($tasks);
+        return response()->json([
+            'tasks' => TaskResource::collection($tasks),
+            'category' => null,
+        ]);
     }
 
     /**
@@ -51,7 +58,7 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        $task = Task::create($request->only(['title', 'description', 'deadline']));
+        $task = Task::create($request->only(['category_id', 'title', 'description', 'deadline']));
         return new TaskResource($task);
     }
 
@@ -72,9 +79,9 @@ class TaskController extends Controller
      * @param int id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(Task $task)
     {
-        $task = Task::findOrFail($id);
+        $this->authorize('update', $task);
         $task->completed = !$task->completed;
         $task->save();
 
@@ -87,9 +94,10 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Task $task)
     {
-        Task::findOrFail($id)->delete();
+        $this->authorize('delete', $task);
+        $task->delete();
         return response()->noContent();
     }
 }

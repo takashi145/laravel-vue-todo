@@ -1,21 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router"
-import Home from '@/Pages/Home.vue'
-import Task from '@/Pages/task/Task.vue'
-import Category from '@/Pages/Category.vue'
+import TaskList from '@/Pages/TaskList.vue'
+import Category from '@/Pages/CategoryList.vue'
 import Login from '@/Pages/auth/Login.vue'
 import Register from '@/Pages/auth/Register.vue'
 import { store } from "../store"
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: Home
-  },
-  {
     path: '/task',
-    name: 'task',
-    component: Task,
+    name: 'tasks',
+    component: TaskList,
     meta: {requiresAuth: true}
   },
   {
@@ -27,7 +21,7 @@ const routes = [
   {
     path: '/category/:id',
     name: 'task_list',
-    component: Task,
+    component: TaskList,
     meta: {requiresAuth: true},
   },
   {
@@ -62,7 +56,7 @@ router.beforeEach((to, from , next) => {
       if(!store.getters.login) {
         next();
       }else {
-        next('/')
+        next({ path: '/task' })
       }
     }else {
       next();

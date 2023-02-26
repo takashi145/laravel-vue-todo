@@ -11,9 +11,14 @@ use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
-    public function getCategories()
+    public function __construct()
     {
-        return CategoryResource::collection(Category::with('tasks')->orderBy('name', 'asc')->get());
+        $this->authorizeResource(Category::class, 'category');
+    }
+
+    public function index()
+    {
+        return CategoryResource::collection(Auth::user()->categories()->with('tasks')->orderBy('name', 'asc')->get());
     }
 
     public function store(StoreCategoryRequest $request)

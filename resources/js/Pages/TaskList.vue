@@ -2,12 +2,12 @@
 import { onMounted } from '@vue/runtime-core';
 import { ref } from 'vue';
 import axios from 'axios';
-import AuthLayout from '../../Layouts/AuthLayout.vue';
-import TaskList from '../../Components/TaskList.vue';
-import CategoryList from '../../Components/CategoryList.vue';
-import CreateTask from '../../Components/CreateTask.vue';
-import ShowTask from '../../Components/ShowTask.vue';
-import SearchForm from '../../Components/SearchForm.vue';
+import AuthLayout from './../Layouts/AuthLayout.vue';
+import TaskList from '../Components/task/TaskList.vue'
+import CategoryList from './../Components/category/CategoryList.vue';
+import CreateTask from './../Components/task/CreateTask.vue';
+import ShowTask from './../Components/task/ShowTask.vue';
+import SearchForm from './../Components/task/SearchForm.vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const tasks = ref([]);
@@ -17,6 +17,8 @@ const openCreateForm = ref(false);
 const openTaskDetail = ref(false);
 const openSearchForm = ref(false);
 const errors = ref({});
+
+const category = ref(null);
 
 const route = useRoute();
 const router = useRouter();
@@ -31,6 +33,7 @@ const closeModal = () => {
   openSearchForm.value = false
 }
 
+
 const getTaskList = async ()  => {
   try {
     const id = route.params.id;
@@ -41,6 +44,7 @@ const getTaskList = async ()  => {
       res =  await axios.get(`/api/category/${route.params.id}/tasks`, {
         params: route.query
       })
+      category.value = res.data.category;
     }else {
       res = await axios.get('/api/task', {
         params: route.query
@@ -48,7 +52,7 @@ const getTaskList = async ()  => {
     }
     setTimeout(() => {
       isLoading.value = false
-      tasks.value = res.data
+      tasks.value = res.data.tasks
     }, 500);
   }catch(e) {
     isLoading.value = false
@@ -101,12 +105,17 @@ const deleteTask = async id => {
   }
 }
 
+const select_category = async category_id => {
+  await router.push(`/category/${category_id}`);
+  await getTaskList();
+}
+
 </script>
 
 <template>
   <auth-layout>
     <!-- カテゴリ一覧 -->
-    <CategoryList />
+    <CategoryList @select_category="select_category" />
 
     <!-- タスク詳細 -->
     <ShowTask :open="openTaskDetail" :task="taskDetail" @closeModal="closeModal" />
@@ -114,7 +123,16 @@ const deleteTask = async id => {
     <!-- タスク作成フォーム -->
     <CreateTask :open="openCreateForm" :errors="errors" @closeModal="closeModal" @createTask="createTask" />
     
-    <div class="lg:flex mt-8 w-full mx-auto overflow-auto">
+    <div v-if="category" class="mt-4 flex items-center">
+      <label for="" class="mr-3">カテゴリ: </label>
+      <h3 class="text-lg underline">{{ category.name }}</h3>
+    </div>
+
+    <div v-else class="mt-4 flex items-center">
+      <h3 class="text-lg underline">すべてのタスク</h3>
+    </div>
+
+    <div class="lg:flex my-8 w-full mx-auto overflow-auto">
       <!--検索フォーム-->
       <button @click="openSearchForm = !openSearchForm" :class="{'block': openSearchForm}" class="lg:hidden text-white bg-indigo-300 hover:bg-indigo-400 p-2 rounded">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block">

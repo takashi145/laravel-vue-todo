@@ -25,10 +25,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::apiResource('task', TaskController::class);
-    Route::get('/category/{category}/tasks', [TaskController::class, 'task_list']);
+    Route::get('/category/{category}/tasks', [TaskController::class, 'get_task_list']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::get('/category', [CategoryController::class, 'getCategories']);
+    Route::get('/category', [CategoryController::class, 'index']);
     Route::post('/category', [CategoryController::class, 'store']);
     Route::put('/category/{category}', [CategoryController::class, 'update']);
     Route::delete('/category/{category}', [CategoryController::class, 'destroy']);

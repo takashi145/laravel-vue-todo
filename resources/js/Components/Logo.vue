@@ -1,5 +1,5 @@
 <template>
-  <router-link to="/" class="text-xl ">
+  <router-link to="/task" class="text-xl ">
     Simple Todo
   </router-link>
 </template>

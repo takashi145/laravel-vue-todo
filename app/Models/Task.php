@@ -17,6 +17,11 @@ class Task extends Model
         'completed',
     ];
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function scopeSearchDeadline($query, $data)
     {
         if($data == 'yet') {

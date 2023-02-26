@@ -13,11 +13,11 @@ const emit = defineEmits(['search'])
 
 const form = reactive
 ({
-  deadline: 'all',
-  completed: 'all',
-  keyword: '',
-  deadline_start: '',
-  deadline_end: '',
+  deadline: route.query.deadline ?? 'all',
+  completed: route.query.completed ?? 'all',
+  keyword: route.query.keyword,
+  deadline_start: route.query.deadline_start,
+  deadline_end: route.query.deadline_end,
 });
 
 const search = async () => {

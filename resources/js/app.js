@@ -6,7 +6,7 @@ import App from "./App.vue";
 import router from '@/router'
 
 store.dispatch('getUser')
-.then(() => {
+.finally(() => {
   createApp(App)
   .use(router)
   .use(store)

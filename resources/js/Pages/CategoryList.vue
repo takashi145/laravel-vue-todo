@@ -3,8 +3,8 @@ import AuthLayout from '@/Layouts/AuthLayout.vue';
 import { ref } from 'vue';
 import { onMounted } from '@vue/runtime-core';
 import axios from 'axios';
-import CreateCategory from '../Components/CreateCategory.vue';
-import EditCategory from '../Components/EditCategory.vue';
+import CreateCategory from '../Components/category/CreateCategory.vue';
+import EditCategory from '../Components/category/EditCategory.vue';
 
 const categories = ref([]);
 
@@ -54,6 +54,7 @@ const createCategory = async form => {
 const editCategory = (id, name) => {
   category.value.id = id;
   category.value.name = name;
+  errors.value = {};
   show2.value = true;
 }
 

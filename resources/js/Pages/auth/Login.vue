@@ -22,7 +22,6 @@ const login = async() => {
     store.commit('setLoginState', true)
     router.push('/task')
   }catch(e) {
-    console.log(e);
     error.value = 'ログインに失敗しました。メールアドレスまたはパスワードが違います。'
   }
 }

@@ -24,7 +24,7 @@ const deleteTask = id => {
 </script>
 
 <template>
-  <div :class="{'relative': isLoading}" class="w-full">
+  <div :class="{'relative': isLoading}" class="w-full mb-12 h-full">
     <div v-if="isLoading" class="flex justify-center">
       <div class=" fixed inset-0 bg-gray-500 opacity-10"></div>
       <div class=" fixed top-60 animate-spin h-16 w-16 border-8 border-t-transparent border-indigo-300 rounded-full"></div>
@@ -39,7 +39,7 @@ const deleteTask = id => {
           <th class="title-font tracking-wider font-medium text-gray-900 text-sm rounded-tr rounded-br"></th>
         </tr>
       </thead>
-      <tbody class="bg-gray-50">
+      <tbody v-if="tasks.length >= 1" class="bg-gray-50">
         <tr v-for="task in tasks" :key="task.id" class="border-b">
           <td class="px-4 py-3">
             <button @click="showTask(task.id)">{{ task.title }}</button>
@@ -47,8 +47,8 @@ const deleteTask = id => {
           <td class="px-4 py-3">
             <form @submit.prevent="toggleStatus(task.id)">
               <button type="submit" class="">
-                <span v-if="task.completed" class="text-sm p-2 rounded text-white bg-green-400 hover:bg-green-500">完了</span>
-                <span v-else class="text-sm p-2 rounded text-white bg-red-400 hover:bg-red-500">未完了</span>  
+                <div v-if="task.completed" class="text-sm p-2 rounded text-white bg-green-400 hover:bg-green-500">完了</div>
+                <div v-else class="text-sm p-2 rounded text-white bg-red-400 hover:bg-red-500">未完了</div>  
               </button>
             </form>
           </td>
@@ -64,6 +64,9 @@ const deleteTask = id => {
               </form>
           </td>
         </tr>
+      </tbody>
+      <tbody v-else>
+        <div class="fixed m-8 text-lg">タスクがありません。</div>
       </tbody>
     </table> 
   </div>
