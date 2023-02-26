@@ -1,5 +1,15 @@
 <script setup>
 import { reactive } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
+defineProps({
+  open: Boolean
+})
+
+const route = useRoute();
+const router = useRouter();
+
+const emit = defineEmits(['search'])
 
 const form = reactive
 ({
@@ -10,24 +20,27 @@ const form = reactive
   deadline_end: '',
 });
 
-const emit = defineEmits(['search'])
-
-const search = () => {
-  emit('search', form)
+const search = async () => {
+  await router.push({
+    path: `/category/${route.params.id}`,
+    query: form
+  });
+  emit('search')
 }
 
-const reset = () => {
+const reset = async () => {
   form.deadline = 'all'
   form.completed = 'all'
   form.deadline_start = ''
   form.deadline_end = ''
   form.keyword = ''
+  await search();
 }
 
 </script>
 
 <template>
-  <div class="p-3 mb-3 mr-8 w-full lg:w-1/3">
+  <div :class="{'hidden': !open}" class="lg:block p-3 mb-3 mr-8 w-full lg:w-1/3">
     <form @submit.prevent="search()" class="shadow-lg p-8 border rounded">
       <div class="mb-3">
         <label for="" class="text-lg">期限で絞り込み</label>

@@ -4,12 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Resources\TaskResource;
+use App\Models\Category;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class TaskController extends Controller
 {
+
+    public function task_list(Request $request, Category $category)
+    {
+        $tasks = $category->tasks()
+            ->searchDeadline($request->deadline)
+            ->searchStatus($request->completed)
+            ->searchKeyword($request->keyword)
+            ->betweenDeadline($request->deadline_start, $request->deadline_end)
+            ->orderBy('deadline', 'asc')
+            ->get();
+
+        return TaskResource::collection($tasks);
+    }
+    
     /**
      * Display a listing of the resource.
      *

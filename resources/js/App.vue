@@ -4,6 +4,12 @@
 
 <template>
   <div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
+
+<style>
+body {
+  height: 100vh;
+}
+</style>

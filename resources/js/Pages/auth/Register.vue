@@ -2,6 +2,7 @@
 import { ref, reactive } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router'
+import GuestLayout from '../../Layouts/GuestLayout.vue';
 
 const router = useRouter();
 
@@ -32,8 +33,8 @@ const register = async() => {
 
 <template>
   <guest-layout>
-    <div class="my-24">
-      <div class="p-12 mx-auto border rounded-lg w-full md:w-3/4 lg:w-1/3 shadow-lg">
+    <div class="">
+      <div class="p-12 mx-auto border rounded-lg w-full md:w-3/4 lg:w-1/3 shadow-lg bg-white">
         <h1 class="text-2xl text-center m-6 font-bold">SimpleTodo</h1>
         <form @submit.prevent="register()" class="space-y-4">
             <div>

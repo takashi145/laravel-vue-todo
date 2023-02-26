@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router"
 import Home from '@/Pages/Home.vue'
-import TaskList from '@/Pages/task/TaskList.vue'
+import Task from '@/Pages/task/Task.vue'
+import Category from '@/Pages/Category.vue'
 import Login from '@/Pages/auth/Login.vue'
 import Register from '@/Pages/auth/Register.vue'
 import { store } from "../store"
@@ -13,9 +14,21 @@ const routes = [
   },
   {
     path: '/task',
-    name: 'task.index',
-    component: TaskList,
+    name: 'task',
+    component: Task,
     meta: {requiresAuth: true}
+  },
+  {
+    path: '/category',
+    name: 'category',
+    component: Category,
+    meta: {requiresAuth: true}
+  },
+  {
+    path: '/category/:id',
+    name: 'task_list',
+    component: Task,
+    meta: {requiresAuth: true},
   },
   {
     path: '/login',

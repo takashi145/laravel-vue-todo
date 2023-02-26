@@ -13,4 +13,9 @@ class Category extends Model
         'user_id',
         'name',
     ];
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

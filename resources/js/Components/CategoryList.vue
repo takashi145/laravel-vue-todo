@@ -47,7 +47,7 @@ const createCategory = async() => {
     <button @click="show = true" class="text-gray-500 hover:text-gray-600 font-bold text-xl underline">Category →</button>
     <div v-if="show">
       <div class="z-50 w-72 fixed top-0 left-0 h-full shadow-lg bg-gray-50 border-r-2">
-        <button @click="show = false" class="absolute fixed top-3 right-3 text-gray-600 font-bold text-lg hover:scale-125">
+        <button @click="show = false" class="absolute top-3 right-3 text-gray-600 font-bold text-lg hover:scale-125">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -63,7 +63,7 @@ const createCategory = async() => {
 
           <ul class="mx-3">
             <li v-for="category in categories" :key="category.id" class="border-b-2 border-gray-300 text-lg m-3 p-1 hover:border-b-2 hover:border-indigo-300 cursor-pointer">
-              {{ category.name }}
+              <router-link :to="`/category/${category.id}`">{{ category.name }}</router-link>
             </li>
           </ul>
         </div>

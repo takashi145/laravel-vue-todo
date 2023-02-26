@@ -12,7 +12,7 @@ class CategoryController extends Controller
 {
     public function getCategories()
     {
-        return CategoryResource::collection(Category::orderBy('name', 'asc')->get());
+        return CategoryResource::collection(Category::with('tasks')->orderBy('name', 'asc')->get());
     }
 
     public function store(Request $request)
@@ -30,5 +30,11 @@ class CategoryController extends Controller
             'name' => $request->input('name'),
         ]);
         return new CategoryResource($category);
+    }
+
+    public function destroy(Category $category)
+    {
+        $category->delete();
+        return response()->noContent();
     }
 }
