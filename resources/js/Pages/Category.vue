@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import { onMounted } from '@vue/runtime-core';
 import axios from 'axios';
 import CreateCategory from '../Components/CreateCategory.vue';
+import EditCategory from '../Components/EditCategory.vue';
 
 const categories = ref([]);
 
@@ -12,6 +13,12 @@ onMounted(() => {
 })
 
 const show = ref(false);
+const show2 = ref(false);
+
+const category = ref({
+  id: null,
+  name: null
+});
 
 const errors = ref({});
 
@@ -43,6 +50,23 @@ const createCategory = async form => {
     errors.value = e.response.data.errors;
   }
 }
+
+const editCategory = (id, name) => {
+  category.value.id = id;
+  category.value.name = name;
+  show2.value = true;
+}
+
+const updateCategory = async form => {
+  try {
+    if(!category.value.id) return;
+    await axios.put(`/api/category/${form.id}`, form);
+    show2.value = false;
+    await getCategories();
+  }catch(e) {
+    errors.value = e.response.data.errors;
+  }
+}
 </script>
 
 <template>
@@ -67,7 +91,7 @@ const createCategory = async form => {
                 <td class="px-4 py-3"><router-link :to="`/category/${category.id}`">{{ category.name }}</router-link></td>
                 <td class="px-4 py-3">{{ category.task_count }}</td>
                 <td class="px-4 py-3 text-gray-900 space-x-3">
-                  <button @click="deleteCategory" class="text-sm text-blue-400 hover:text-blue-500">編集</button>
+                  <button @click="editCategory(category.id, category.name)" class="text-sm text-blue-400 hover:text-blue-500">編集</button>
                   <button @click="deleteCategory(category.id)" class="text-sm text-red-400 hover:text-red-500">削除</button>
                 </td>
               </tr>
@@ -78,5 +102,7 @@ const createCategory = async form => {
     </div>
 
     <CreateCategory :show="show" :errors="errors" @close="show = false" @create="createCategory" />
+
+    <EditCategory :show="show2" :category="category" :errors="errors" @close="show2 = false" @update_category="updateCategory" />
   </auth-layout>
 </template>

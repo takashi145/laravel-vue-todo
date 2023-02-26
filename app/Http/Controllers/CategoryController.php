@@ -25,6 +25,13 @@ class CategoryController extends Controller
         return new CategoryResource($category);
     }
 
+    public function update(StoreCategoryRequest $request, Category $category)
+    {
+        $category->name = $request->input('name');
+        $category->save();
+        return new CategoryResource($category);
+    }
+
     public function destroy(Category $category)
     {
         $category->delete();

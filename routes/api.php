@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->group(function() {
 
     Route::get('/category', [CategoryController::class, 'getCategories']);
     Route::post('/category', [CategoryController::class, 'store']);
+    Route::put('/category/{category}', [CategoryController::class, 'update']);
     Route::delete('/category/{category}', [CategoryController::class, 'destroy']);
 });
 
