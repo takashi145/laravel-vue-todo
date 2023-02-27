@@ -3,9 +3,16 @@ import TaskList from '@/Pages/TaskList.vue'
 import Category from '@/Pages/CategoryList.vue'
 import Login from '@/Pages/auth/Login.vue'
 import Register from '@/Pages/auth/Register.vue'
+import Welcome from '@/Pages/Welcome.vue';
+
 import { store } from "../store"
 
 const routes = [
+  {
+    path: '/',
+    name: 'welcome',
+    component: Welcome
+  },
   {
     path: '/task',
     name: 'tasks',
@@ -36,6 +43,10 @@ const routes = [
     component: Register,
     meta: {guest: true}
   },
+  {
+    path: '/:catchAll(.*)',
+    component: Welcome
+  }
 
 ]
 
