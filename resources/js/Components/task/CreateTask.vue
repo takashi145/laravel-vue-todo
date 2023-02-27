@@ -1,18 +1,20 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
+
+const props = defineProps({
+  open: Boolean,
+  errors: Object,
+  categories: Array,
+})
 
 const form = reactive({
   title: '',
   description: '',
   deadline: '',
+  category_id: ''
 });
 
 const emit = defineEmits(['createTask'])
-
-const props = defineProps({
-  open: Boolean,
-  errors: Object
-})
 
 const submit = () => {
   emit('createTask', form);
@@ -44,6 +46,13 @@ const submit = () => {
                         <label for="deadline" class="block mb-2 text-lg font-medium text-gray-900">Deadline<span class="text-red-500"> *</span></label>
                         <input type="date" v-model="form.deadline" name="deadline" id="deadline" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3" placeholder="期限を入力してください" required>
                         <div v-if="errors.deadline" class="text-red-400 ml-3">{{ errors.deadline[0] }}</div>
+                      </div>
+                      <div>
+                        <label for="category_id" class="block mb-2 text-lg font-medium text-gray-900">Category<span class="text-red-500"> *</span></label>
+                        <select v-model="form.category_id" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3" required>
+                          <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
+                        </select>
+                        <div v-if="errors.category_id" class="text-red-400 ml-3">{{ errors.deadline[0] }}</div>
                       </div>
                       <div class="flex justify-around">
                         <button type="submit" class="w-1/2 mx-3 text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3">Submit</button>

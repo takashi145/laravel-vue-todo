@@ -26,7 +26,8 @@ class StoreTaskRequest extends FormRequest
         return [
             'title' => ['required', 'max:50'],
             'description' => ['nullable', 'max:200'],
-            'deadline' => ['required', 'after:tomorrow']
+            'deadline' => ['required', 'after:tomorrow'],
+            'category_id' => ['required'],
         ];
     }
 }

@@ -20,11 +20,14 @@ const errors = ref({});
 
 const category = ref(null);
 
+const categories = ref([]);
+
 const route = useRoute();
 const router = useRouter();
 
-onMounted(() => {
-  getTaskList();
+onMounted(async () => {
+  await getTaskList();
+  await getCategories();
 });
 
 const closeModal = () => {
@@ -61,11 +64,9 @@ const getTaskList = async ()  => {
 
 const createTask = async form => {
   try {
-    await axios.post('/api/task', form)
-      .then(res => {
-        tasks.value.unshift(res.data)
-        openCreateForm.value = false
-      })
+    await axios.post('/api/task', form);
+    await getTaskList();
+    openCreateForm.value = false;
   }catch(e) {
     errors.value = e.response.data.errors
   }
@@ -110,18 +111,23 @@ const select_category = async category_id => {
   await getTaskList();
 }
 
+const getCategories = async () => {
+  const res = await axios.get('/api/category');
+  categories.value = res.data
+}
+
 </script>
 
 <template>
   <auth-layout>
     <!-- カテゴリ一覧 -->
-    <CategoryList @select_category="select_category" />
+    <CategoryList :categories="categories" @select_category="select_category" />
 
     <!-- タスク詳細 -->
     <ShowTask :open="openTaskDetail" :task="taskDetail" @closeModal="closeModal" />
 
     <!-- タスク作成フォーム -->
-    <CreateTask :open="openCreateForm" :errors="errors" @closeModal="closeModal" @createTask="createTask" />
+    <CreateTask :open="openCreateForm" :categories="categories" :errors="errors" @closeModal="closeModal" @createTask="createTask" />
     
     <div v-if="category" class="mt-4 flex items-center">
       <label for="" class="mr-3">カテゴリ: </label>

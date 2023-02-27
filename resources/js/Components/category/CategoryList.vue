@@ -1,38 +1,16 @@
 <script setup>
-import axios from 'axios';
-import { onMounted, reactive, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import {ref, defineProps, computed } from 'vue';
+import { useRoute } from 'vue-router';
 
-const router = useRouter();
+defineProps({
+  categories: Array
+})
 
 const route = useRoute();
 
 const emit = defineEmits(['select_category']);
 
-const categories = ref([])
-
 const show = ref(false)
-
-const form = reactive({
-  name: '',
-})
-
-const error = ref('');
-
-onMounted(() => {
-  getCategories();
-})
-
-const getCategories = async() => {
-  try {
-    await axios.get('/api/category')
-    .then((res) => {
-      categories.value = res.data
-    })
-  }catch(e) {
-    console.log(e)
-  }
-}
 </script>
 
 <template>
